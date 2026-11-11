@@ -1,166 +1,106 @@
-# AI Problem Design & Student Feedback Classifier
+# Student Feedback Sentiment Classifier
 
 ## 1. Problem Statement
 
-Educational institutions receive student feedback about teachers, courses, and learning experiences. Reviewing this feedback manually can be time-consuming.
+Student feedback provides valuable information about teaching quality and the learning experience. However, manually analyzing large amounts of feedback can be time-consuming.
 
-This project focuses on building an AI system that classifies student feedback into three categories:
+This project aims to develop a simple Machine Learning prototype that automatically classifies student feedback into three sentiment categories:
 
-* Positive
-* Negative
-* Neutral
+- Positive
+- Negative
+- Neutral
 
-The goal is to help teachers and academic staff understand student opinions more efficiently.
+The intended users include teachers, educational institutions, and academic coordinators.
 
-## 2. Target Users
+## 2. Methodology
 
-* Teachers
-* Educational institutions
-* Academic coordinators
+This project uses Natural Language Processing (NLP) and Machine Learning.
 
-## 3. AI Use Case
+**Dataset:**
+- Student feedback dataset containing text and sentiment labels.
+- 639 records after data cleaning.
+- Two columns: text and sentiment.
 
-**Task Type:** Text Classification
+**Data Preprocessing:**
+- Selected required columns.
+- Removed missing values.
+- Removed duplicate records.
 
-**Input:** Student feedback in text format.
+**Feature Extraction:**
+- TF-IDF (Term Frequency-Inverse Document Frequency) converts text into numerical features.
 
-**Output:** Positive, Negative, or Neutral.
+**Machine Learning Model:**
+- Logistic Regression was used for sentiment classification.
+- Dataset was divided into 80% training and 20% testing data.
+- Training samples: 511
+- Testing samples: 128
 
-**Example:**
+## 3. Demo and Results
 
-Input: "The teacher explains concepts clearly."
+The prototype was developed and tested using Google Colab.
 
-Expected Output: Positive
+Example inputs:
 
-## 4. Data Source
+| Student Feedback | Predicted Sentiment |
+|---|---|
+| The teacher explains everything very clearly. | Positive |
+| The lectures are boring and confusing. | Neutral |
+| The class starts at 9 AM. | Positive |
 
-The project uses a student feedback sentiment dataset obtained from Hugging Face.
+**Model Evaluation:**
 
-The dataset originally contained 724 records and four columns.
+The model was evaluated using:
 
-For this project, only the following columns were selected:
+- Accuracy
+- Precision
+- Recall
+- F1-score
+- Confusion Matrix
 
-* Feedback text
-* Sentiment label
+The model achieved approximately 56.25% accuracy on the test dataset.
 
-Data preprocessing included:
+The confusion matrix and classification report are included in the project notebook.
 
-* Removing duplicate records.
-* Removing missing values.
-* Resetting the dataset index.
+## 4. Limitations
 
-After preprocessing, the final dataset contained **639 records and 2 columns**.
+The current prototype has several limitations:
 
-## 5. Constraints
+- The dataset is relatively small.
+- The model supports English-language feedback only.
+- Sarcasm and mixed sentiments can be difficult to classify.
+- Some predictions may be incorrect.
+- Model performance depends on the quality and diversity of training data.
 
-* The dataset is relatively small.
-* The first version supports English only.
-* Sarcasm, spelling mistakes, and mixed sentiments may affect predictions.
-* The model may produce incorrect classifications.
-* Human review remains important.
+The prototype should be improved with a larger and more diverse dataset before real-world use.
 
-## 6. Machine Learning Approach
+## 5. Ethical Considerations
 
-The prototype uses:
+- Student feedback should be handled confidentially.
+- Personal and identifiable information should not be collected unnecessarily.
+- Predictions should not be treated as absolute judgments.
+- Human review should be considered before making important educational decisions.
+- The model should be evaluated for potential bias and classification errors.
 
-**TF-IDF (Term Frequency-Inverse Document Frequency)**
+## 6. Technologies Used
 
-TF-IDF converts text into numerical features so that a machine learning model can process it.
+- Python
+- Google Colab
+- Pandas
+- Scikit-learn
+- TF-IDF
+- Logistic Regression
+- NLP
+- GitHub
 
-**Logistic Regression**
+## 7. Project Files
 
-Logistic Regression is used to classify feedback into Positive, Negative, and Neutral categories.
+- `student_feedback_classifier.ipynb` – Complete implementation and evaluation.
+- `dataset.csv` – Cleaned dataset.
+- `requirements.txt` – Required Python libraries.
+- `README.md` – Project documentation.
 
-The TF-IDF vectorizer uses unigrams and bigrams (`ngram_range=(1, 2)`).
+## 8. Conclusion
 
-The dataset was divided into:
+This project demonstrates how Machine Learning and NLP can be used to classify student feedback into positive, negative, and neutral categories.
 
-* Training data: 511 records
-* Testing data: 128 records
-
-An 80/20 train-test split was used with stratification.
-
-## 7. Evaluation Results
-
-The model was evaluated using accuracy, precision, recall, F1-score, and a confusion matrix.
-
-**Model Accuracy: 59.38%**
-
-**Baseline Accuracy: 59.38%**
-
-### Classification Report
-
-| Sentiment | Precision | Recall | F1-Score |
-| --------- | --------: | -----: | -------: |
-| Negative  |      0.43 |   0.44 |     0.44 |
-| Neutral   |      0.22 |   0.16 |     0.19 |
-| Positive  |      0.73 |   0.79 |     0.76 |
-
-**Weighted F1-Score:** 0.58
-
-The model achieved approximately 59.38% accuracy. It performed better on positive feedback than on negative and neutral feedback.
-
-The model did not meaningfully outperform the majority-class baseline. Therefore, the initial 80% accuracy target was not achieved.
-
-## 8. Example Inputs and Outputs
-
-The following examples were tested using the trained model:
-
-| Input Feedback                                | Predicted Sentiment |
-| --------------------------------------------- | ------------------- |
-| The teacher explains everything very clearly. | Positive            |
-| The lectures are boring and confusing.        | Neutral             |
-| The class starts at 9 AM.                     | Positive            |
-
-These examples demonstrate that the model can generate predictions, but some predictions may be incorrect.
-
-## 9. Project Limitations
-
-* The model has limited accuracy.
-* Neutral feedback is particularly difficult for the current model.
-* The dataset is relatively small.
-* The model may misunderstand context or sentence meaning.
-* Predictions should not be treated as completely reliable.
-
-## 10. Expected Outcome
-
-The project demonstrates a basic machine learning prototype that classifies student feedback into sentiment categories.
-
-It provides a starting point for understanding text preprocessing, feature extraction, model training, and evaluation.
-
-## 11. Project Status
-
-* Problem definition: Completed
-* Dataset preprocessing: Completed
-* Train-test split: Completed
-* TF-IDF feature extraction: Completed
-* Logistic Regression model training: Completed
-* Model evaluation: Completed
-* Example predictions: Completed
-* GitHub documentation: In progress
-
-## 12. Future Improvements
-
-* Support Urdu and Roman Urdu.
-* Use a larger and more diverse dataset.
-* Improve classification performance.
-* Build a simple web interface.
-* Evaluate the model on additional feedback examples.
-
-## 13. Documentation
-
-**Task 1 – AI Problem Design Document:**
-
-[View Problem Design Document](https://docs.google.com/document/d/1n7dkTUNNrBXQhRPU_8jUFWjfHNOKqb0YNJETopXir3o/edit?usp=sharing)
-
----
-
-**Project Type:** Machine Learning – Text Classification
-
-**Technologies:** Python, Pandas, Scikit-learn, TF-IDF, Logistic Regression, Google Colab
-
-
-* Support Urdu and Roman Urdu.
-* Use a larger dataset.
-* Build a simple web interface.
-* Evaluate the model on more diverse feedback.
+It provided practical experience in data preprocessing, text feature extraction, model training, evaluation, and developing a basic AI prototype.
